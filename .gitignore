@@ -3,8 +3,12 @@
 bin/
 bin-int/
 !vendor/*
+build/
 
 # Files
 *.user
 *.vcxproj*
 *.sln
+
+# Temp files
+**~

@@ -1,13 +1,25 @@
-add_library("CHCL")
-
-target_include_directories(CHCL
-	PUBLIC
-		src
-)
+add_library(CHCL)
 
 target_compile_features(CHCL
 	PUBLIC
-		cxx_std_20	
+		cxx_std_20
 )
 
-add_subdirectory(src/CHCL)
+target_sources(CHCL
+	PRIVATE
+		Prints.cpp
+)
+
+target_sources(CHCL
+	PUBLIC
+		FILE_SET HEADERS
+		FILES
+			Formatter.h
+			Prints.h
+)
+
+add_subdirectory("dataStorage")
+add_subdirectory("geometry")
+add_subdirectory("maths")
+add_subdirectory("files")
+add_subdirectory("misc")
