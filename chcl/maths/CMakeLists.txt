@@ -1,13 +1,11 @@
-target_sources(CHCL
+target_sources(chcl
 	PRIVATE
 		Common.cpp
 		Continuous.cpp
 		Mat2.cpp
 		Mat3.cpp
 		Mat4.cpp
-)
 
-target_sources(CHCL
 	PUBLIC
 		FILE_SET HEADERS
 		FILES

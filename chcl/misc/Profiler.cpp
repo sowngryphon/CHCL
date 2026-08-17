@@ -1,6 +1,6 @@
 #include "Profiler.h"
 
-#include "CHCL/Formatter.h"
+#include "chcl/Formatter.h"
 
 static chcl::Profiler::ProfilerEntry * const g_topLevelEntry = new chcl::Profiler::ProfilerEntry(chcl::Profiler::TopLevelName);
 // static std::vector<chcl::Profiler::ProfilerEntry*> g_entries = { g_topLevelEntry};

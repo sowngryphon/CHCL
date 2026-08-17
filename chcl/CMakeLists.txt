@@ -1,16 +1,9 @@
-add_library(CHCL)
-
-target_compile_features(CHCL
-	PUBLIC
-		cxx_std_20
-)
-
-target_sources(CHCL
+target_sources(chcl
 	PRIVATE
 		Prints.cpp
 )
 
-target_sources(CHCL
+target_sources(chcl
 	PUBLIC
 		FILE_SET HEADERS
 		FILES

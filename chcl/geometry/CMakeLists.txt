@@ -1,13 +1,11 @@
-target_sources(CHCL
+target_sources(chcl
 	PRIVATE
 		AlignedRect.cpp
 		Circle.cpp
 		Quaternion.cpp
 		Rect.cpp
 		ShapeOverlap.cpp
-)
 
-target_sources(CHCL
 	PUBLIC
 		FILE_SET HEADERS
 		FILES

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CHCL/dataStorage/Buffer.h"
+#include "chcl/dataStorage/Buffer.h"
 
 namespace chcl
 {

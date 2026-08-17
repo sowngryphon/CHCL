@@ -72,7 +72,7 @@ namespace chcl
 		 * @brief Get pointer to underlying data
 		 * @return Pointer to underlying data
 		 */
-		ValueType* data() requires !SpecializedVec<DerivedType>
+		ValueType* data() requires (!SpecializedVec<DerivedType>)
 		{
 			return static_cast<DerivedType*>(this)->position;
 		}
@@ -81,7 +81,7 @@ namespace chcl
 		 * @brief Get pointer to underlying data
 		 * @return Pointer to underlying data
 		 */
-		ValueType* data() requires SpecializedVec<DerivedType>
+		ValueType* data() requires (SpecializedVec<DerivedType>)
 		{
 			return &static_cast<DerivedType*>(this)->x;
 		}
@@ -210,7 +210,7 @@ namespace chcl
 			return std::sqrt(magsq());
 		}
 
-		const ValueType& operator[](size_t n) const requires !SpecializedVec<DerivedType>
+		const ValueType& operator[](size_t n) const requires (!SpecializedVec<DerivedType>)
 		{
 			return static_cast<const DerivedType*>(this)->position[n];
 		}
@@ -220,7 +220,7 @@ namespace chcl
 			return *(&static_cast<const DerivedType*>(this)->x + n);
 		}
 
-		ValueType& operator[](size_t n) requires !SpecializedVec<DerivedType>
+		ValueType& operator[](size_t n) requires (!SpecializedVec<DerivedType>)
 		{
 			return static_cast<DerivedType*>(this)->position[n];
 		}
@@ -353,7 +353,7 @@ namespace chcl
 
 	// Macro for the base body of a derived vector class
 	#define VECTORN_CLASS(dims, T) using BaseType = VectorBase<dims, T, VectorN>;\
-		using BaseType::VectorBase;\
+		using BaseType::BaseType;\
 		using ValueType = T;\
 		using DerivedType = VectorN<dims, T>;\
 		VectorN(const DerivedType &other) = default;\

@@ -15,7 +15,7 @@ namespace chcl
 	public:
 		using ValueType = T;
 		using BaseType = MatrixBase<size, size, ValueType, Derived>;
-		using BaseType::MatrixBase;
+		using BaseType::BaseType;
 		using BaseType::m_values;
 		using BaseType::operator =;
 		using BaseType::operator+=;

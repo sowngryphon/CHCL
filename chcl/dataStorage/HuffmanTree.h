@@ -4,7 +4,7 @@
 
 #include "chcl/dataStorage/BitStream.h"
 
-#include "CHCL/misc/Profiler.h"
+#include "chcl/misc/Profiler.h"
 
 namespace chcl
 {

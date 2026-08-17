@@ -1,6 +1,6 @@
-#include "Prints.h"
+#include "chcl/Prints.h"
 
-#include "Formatter.h"
+#include "chcl/Formatter.h"
 
 void chcl::PrintBuffer(const Buffer &buffer)
 {

@@ -1,4 +1,4 @@
-target_sources(CHCL
+target_sources(chcl
 	PRIVATE
 		BinaryFile.cpp
 		BitStream.cpp
@@ -7,9 +7,7 @@ target_sources(CHCL
 		JSON_Parser.cpp
 		OctBool.cpp
 		OctBoolArray.cpp
-)
 
-target_sources(CHCL
 	PUBLIC
 		FILE_SET HEADERS
 		FILES

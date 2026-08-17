@@ -11,7 +11,7 @@
 #include "chcl/geometry/VectorN.h"
 #include "chcl/geometry/DynamicVector.h"
 
-#include "CHCL/dataStorage/Buffer.h"
+#include "chcl/dataStorage/Buffer.h"
 
 namespace chcl
 {

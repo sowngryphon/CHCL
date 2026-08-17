@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#include "CHCL/dataStorage/BitStreamView.h"
-#include "CHCL/dataStorage/HuffmanTree.h"
+#include "chcl/dataStorage/BitStreamView.h"
+#include "chcl/dataStorage/HuffmanTree.h"
 
-#include "CHCL/misc/Profiler.h"
+#include "chcl/misc/Profiler.h"
 
 chcl::HuffmanTree<uint16_t> g_fixedLenHuffmanTree;
 chcl::HuffmanTree<uint16_t> g_fixedDistHuffmanTree;

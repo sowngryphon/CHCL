@@ -1,9 +1,7 @@
-target_sources(CHCL
+target_sources(chcl
 	PRIVATE
 		Deflate.cpp
-)
 
-target_sources(CHCL
 	PUBLIC
 		FILE_SET HEADERS
 		FILES
