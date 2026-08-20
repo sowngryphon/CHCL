@@ -24,7 +24,7 @@ namespace chcl
 			std::vector<QTElement> elements;
 			bool subdivided = false;
 
-			QTRegion(const Rect &area)
+			QTRegion(const AlignedRect &area)
 				: area(area) {}
 
 			bool addElement(const QTElement &element)

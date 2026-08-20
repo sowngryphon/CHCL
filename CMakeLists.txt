@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 4.3)
 project(CHCL)
 
+option(TESTS "Build CHCL tests" OFF)
+
 add_library(chcl)
 
 target_compile_features(chcl
@@ -13,3 +15,7 @@ target_include_directories(chcl
 	"${CMAKE_SOURCE_DIR}/"
 )
 add_subdirectory(chcl)
+
+if (TESTS)
+	add_subdirectory(tests)
+endif()

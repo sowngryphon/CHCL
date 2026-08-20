@@ -94,6 +94,7 @@ private:
 int main()
 {
 	testing::vectors::all();
+	return 0;
 
 	#if 0
 	chcl::VectorN<2> Vector1(5.f);

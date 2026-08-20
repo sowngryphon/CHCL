@@ -5,6 +5,12 @@
 #include <string>
 #include <vector>
 
+#if defined(_MSC_VER)
+#define DBBREAK() __debugreak()
+#else
+#define DBBREAK()
+#endif
+
 namespace Asserts
 {
 	template <typename T>
@@ -14,7 +20,7 @@ namespace Asserts
 			return true;
 
 		std::cout << failText;
-		__debugbreak();
+		DBBREAK();
 		return false;
 	}
 
@@ -28,7 +34,7 @@ namespace Asserts
 			return true;
 
 		std::cout << failText;
-		__debugbreak();
+		DBBREAK();
 		return false;
 	}
 
@@ -39,7 +45,7 @@ namespace Asserts
 			return true;
 
 		std::cout << failText;
-		__debugbreak();
+		DBBREAK();
 		return false;
 	}
 }
