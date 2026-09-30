@@ -14,7 +14,7 @@ target_compile_features(chcl
 
 target_include_directories(chcl
 	PUBLIC
-	"${CMAKE_SOURCE_DIR}/"
+	"${CMAKE_CURRENT_SOURCE_DIR}/"
 )
 add_subdirectory(chcl)
 
