@@ -45,7 +45,7 @@ namespace chcl
 		}
 	};
 
-	template <unsigned int dims, typename T>
+	template <size_t dims, typename T>
 	class ContinuousSolver<VectorN<dims, T>>
 	{
 		using VecType = VectorN<dims, T>;
@@ -66,7 +66,7 @@ namespace chcl
 			VecType offsetB = offset(b);
 			VecType diff = offsetB - offsetA;
 			static chcl::ContinuousSolver<T> diffConstrain(T(-0.5), T(0.5));
-			for (unsigned int i = 0; i < dims; ++i)
+			for (size_t i = 0; i < dims; ++i)
 				diff[i] = diffConstrain.clamp(diff[i]);
 			return diff * m_range;
 		}
@@ -82,7 +82,7 @@ namespace chcl
 		{
 			static chcl::ContinuousSolver<T> offsetConstrain(T(0), T(1));
 			VecType offset = (val - m_min) / m_range;
-			for (unsigned int i = 0; i < dims; ++i)
+			for (size_t i = 0; i < dims; ++i)
 				offset[i] = offsetConstrain.clamp(offset[i]);
 			return offset;
 		}

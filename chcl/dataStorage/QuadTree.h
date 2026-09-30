@@ -117,7 +117,7 @@ namespace chcl
 			}
 		};
 
-		QuadTree(const Rect &area)
+		QuadTree(const AlignedRect &area)
 			: m_primaryRegion(area) {};
 
 		template <ShapeDerived S>

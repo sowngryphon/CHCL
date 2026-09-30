@@ -1,6 +1,8 @@
 #pragma once
 
-#include <istream>
+#include <cstring>
+#include <cstdint>
+#include <type_traits>
 
 namespace chcl
 {
@@ -12,7 +14,7 @@ namespace chcl
 
 	namespace NetworkOrder
 	{
-		template <typename T> requires std::is_integral<T>::value
+		template <typename T> requires std::is_integral_v<T>
 		T reverse(T *value)
 		{
 			T result = 0;

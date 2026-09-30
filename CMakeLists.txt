@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 4.3)
 project(CHCL)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 option(TESTS "Build CHCL tests" OFF)
 
 add_library(chcl)

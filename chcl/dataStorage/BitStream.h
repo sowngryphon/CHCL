@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <vector>
 
 namespace chcl
@@ -30,4 +31,6 @@ namespace chcl
 	private:
 		void shift(size_t bits);
 	};
+
+	bool operator==(const BitStream &lhs, const BitStream &rhs);
 }

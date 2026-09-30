@@ -112,4 +112,6 @@ namespace chcl
 	private:
 		inline uint8_t offsetInByte() const { return m_position % 8; }
 	};
+
+	std::ostream& operator<<(std::ostream& ostream, const BitStreamView &view);
 }

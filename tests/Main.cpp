@@ -6,6 +6,7 @@
 
 #include "chcl/Prints.h"
 
+#include "chcl/geometry/AlignedRect.h"
 #include "chcl/geometry/VectorN.h"
 #include "chcl/geometry/Vector2.h"
 #include "chcl/geometry/Vector3.h"
@@ -93,10 +94,10 @@ private:
 
 int main()
 {
+	std::cout << "Running tests\n";
 	testing::vectors::all();
-	return 0;
 
-	#if 0
+	#if 1
 	chcl::VectorN<2> Vector1(5.f);
 
 	std::cout << "Template vector2: [x: " << Vector1[0] << ", y: " << Vector1[1] << "]\n";
@@ -148,9 +149,9 @@ int main()
 	std::cout << "Matrix #4 * #3:\n"; chcl::printMatrix(matrix4 * matrix3);
 
 	chcl::Mat4 transform = chcl::Mat4::Identity();
-	transform *= chcl::Mat4::Translation(2, 3, 5);
-	transform *= chcl::Mat4::Rotation2D(chcl::toRadians(35.f));
-	transform *= chcl::Mat4::Scale(2, 1.5f, 0.7f);
+	transform *= chcl::Mat4::Translation3D(2, 3, 5);
+	transform *= chcl::Mat4::RotationXY(chcl::toRadians(35.f));
+	transform *= chcl::Mat4::Scale3D(2, 1.5f, 0.7f);
 
 	std::cout << "\nTransform matrix to scale by [2, 1.5, 0.7], rotate by 35 degrees and translate by [2, 3, 5]:\n";
 	chcl::printMatrix(transform);
@@ -215,13 +216,13 @@ int main()
 
 	std::cout << "Rotating vector " << rotVec << " by 45 degrees: " << rotResult << '\n';
 
-	chcl::Mat3 rot30_60 = chcl::Mat3::Rotation(chcl::toRadians(30.f), chcl::toRadians(60));
+	chcl::Mat3 rot30_60 = chcl::Mat3::Rotation3D(chcl::toRadians(30.f), chcl::toRadians(60));
 	chcl::Vector3<> rotVec3D(0, 3, 1);
 	chcl::Vector3<> rotResult3D = rot30_60 * rotVec3D;
 
 	std::cout << "Rotating vector " << rotVec3D << " by 30 degrees pitch and 60 degrees yaw: " << rotResult3D << '\n';
 
-	chcl::Rect rect1(3, 5, 13, 7);
+	chcl::Rect rect1({3, 5}, {13, 7}, 0);
 	chcl::Vector2<> rectVec1(6, 2),	// Above
 		rectVec2(29, 8),			// To the right
 		rectVec3(12, 11);			// Inside
@@ -230,15 +231,15 @@ int main()
 	std::cout << "Rect1 contains point 2? " << rect1.containsPoint(rectVec2) << '\n';
 	std::cout << "Rect1 contains point 3? " << rect1.containsPoint(rectVec3) << '\n';
 
-	chcl::Rect rect2(7, 6, 9, 5),	// TL contained
-		rect3(4, 6, 11, 5),			// Completely contained
-		rect4(-4, 1, 25, 18);		// Completely contains rect1
+	chcl::Rect rect2({7, 6}, {9, 5}),	// TL contained
+		rect3({4, 6}, {11, 5}),			// Completely contained
+		rect4({-4, 1}, {25, 18});		// Completely contains rect1
 
 	std::cout << "Rect1 overlaps Rect2? " << chcl::checkOverlap(rect1, rect2) << '\n';
 	std::cout << "Rect1 overlaps Rect3? " << chcl::checkOverlap(rect1, rect3) << '\n';
 	std::cout << "Rect1 overlaps Rect4? " << chcl::checkOverlap(rect1, rect4) << '\n';
 
-	chcl::QuadTree<std::string> qt(chcl::Rect(0, 0, 100, 100));
+	chcl::QuadTree<std::string> qt(chcl::AlignedRect({0, 0}, {100, 100}));
 
 	qt.addElement("Test 1 at [10, 10]", { 10, 10 });
 	qt.addElement("Test 2 at [15, 9]", { 15, 9 });
@@ -284,22 +285,26 @@ int main()
 	bool jsonBool = section.readElement<bool>("bool_test");
 	auto subobject = section.readElement<chcl::JSON_Object>("object_test");
 	auto subobjArr = section.readElement<std::vector<chcl::JSON_Object>>("obj_arr");
+	std::cout << "Successfully read JSON file\n";
 
 	chcl::JSON_Object writeSubObj;
 	writeSubObj.writeElement("subObj1", subobject);
 	writeSubObj.writeElement("subObj2", subobjArr[0]);
 	writeSubObj.writeElement("subObj3", subobjArr[1]);
 	writeSubObj.writeElement("subObjNum", 42069);
+	std::cout << "Test 1\n";
 
 	chcl::JSON_Object writeObj;
 	writeObj.writeElement("name", name);
 	writeObj.writeElement("float", 3.141f);
 	writeObj.writeElement("subObj", writeSubObj);
+	std::cout << "Test 2\n";
 
 	chcl::JSON_Parser::SaveToFile("res/IntWrite.json", 5);
 	chcl::JSON_Parser::SaveToFile("res/ArrWrite.json", numArr);
 	chcl::JSON_Parser::SaveToFile("res/StrWrite.json", name);
 	chcl::JSON_Parser::SaveToFile("res/FullWrite.json", writeObj);
+	std::cout << "Test 3\n";
 
 	chcl::Vector3 jsonVec{ 0.5f, 0.2f, 22.7f };
 	chcl::JSON_Parser::SaveToFile("res/VecWrite.json", jsonVec);

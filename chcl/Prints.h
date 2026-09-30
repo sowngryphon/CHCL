@@ -17,14 +17,14 @@ namespace chcl
 {
 	void PrintBuffer(const Buffer &buffer);
 
-	template <unsigned int width, unsigned int height, typename T = float>
+	template <size_t width, size_t height, typename T = float>
 	void printMatrix(const Matrix<width, height, T> &matrix, unsigned int places = 2)
 	{
 		std::stringstream numStream;
 		size_t maxLen = 0;
-		for (unsigned int i = 0; i < height; ++i)
+		for (size_t i = 0; i < height; ++i)
 		{
-			for (unsigned int j = 0; j < width; ++j)
+			for (size_t j = 0; j < width; ++j)
 			{
 				numStream.str(std::string());
 				numStream << std::fixed << std::setprecision(places) << matrix.at(i, j);
@@ -34,11 +34,11 @@ namespace chcl
 			}
 		}
 
-		for (unsigned int i = 0; i < height; ++i)
+		for (size_t i = 0; i < height; ++i)
 		{
 			std::cout << '|';
 
-			for (unsigned int j = 0; j < width; ++j)
+			for (size_t j = 0; j < width; ++j)
 			{
 				if (j != 0)
 					std::cout << ", ";

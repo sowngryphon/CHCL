@@ -1,5 +1,7 @@
 #include "Mat3.h"
 
+#include <cmath>
+
 chcl::Mat3 chcl::Matrix<3, 3, float>::RotationXY(float rads)
 {
 	return Mat3({

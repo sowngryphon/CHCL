@@ -4,6 +4,8 @@ bin/
 bin-int/
 !vendor/*
 build/
+.cache/
+.vscode/
 
 # Files
 *.user
@@ -12,3 +14,9 @@ build/
 
 # Temp files
 **~
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+**/Makefile
+**/cmake_install.cmake

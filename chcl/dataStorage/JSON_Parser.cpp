@@ -1,89 +1,51 @@
 #include "JSON_Parser.h"
 
-chcl::JSON_Stream& chcl::operator>>(JSON_Stream &stream, std::string &str)
+bool chcl::JSON_Parser::JumpString(const std::string &text, size_t &index)
 {
-	str.clear();
+	if (text[index] != '\"') return false;
 
-	bool escapedChar = false;
-	std::string elemStr = stream.str();
+	++index;
 
-	if (elemStr[0] != '\"') return stream;
-
-	for (size_t i = 1; i < elemStr.length() - 1; ++i)
+	while (index < text.length())
 	{
-		char currentChar = elemStr[i];
-
-		if (escapedChar)
-		{
-			switch (currentChar)
-			{
-				case '\"':
-					str.push_back('\"');
-					break;
-				case '\\':
-					str.push_back('\\');
-					break;
-				case 'n':
-					str.push_back('\n');
-					break;
-				case 'r':
-					str.push_back('\r');
-					break;
-				case 't':
-					str.push_back('\t');
-					break;
-				default:
-					str.push_back(currentChar);
-			}
-
-			escapedChar = false;
-			continue;
-		}
-
-		if (currentChar == '\\')
-		{
-			escapedChar = true;
-			continue;
-		}
-
-		str.push_back(currentChar);
-	}
-	return stream;
-}
-
-chcl::JSON_Stream& chcl::operator>>(JSON_Stream &stream, bool &val)
-{
-	val = (stream.str() == "true");
-	return stream;
-}
-
-chcl::JSON_Stream& chcl::operator<<(JSON_Stream &stream, const std::string &str)
-{
-	stream << '\"';
-	for (char c : str)
-	{
-		switch (c)
+		switch (text[index++])
 		{
 			case '\\':
+				++index;
+				break;
 			case '\"':
-			case '\n':
-			case '\r':
-			case '\t':
-				stream << '\\';
+				return true;
 		}
-		stream << c;
 	}
-	stream << '\"';
-	return stream;
+	return false;
 }
 
-chcl::JSON_Stream& chcl::operator<<(JSON_Stream &stream, bool val)
+bool chcl::JSON_Parser::JumpElement(const std::string &text, size_t &index)
 {
-	if (val)
-		stream << "true";
-	else
-		stream << "false";
-	return stream;
+	while (index < text.length())
+	{
+		switch (text[index])
+		{
+			case '{':
+				return JumpSection(text, index);
+			case '[':
+				return JumpArray(text, index);
+			case '\"':
+				return JumpString(text, index);
+			case ',':
+			case '}':
+			case ']':
+			case ' ':
+			case '\t':
+			case '\n':
+			case '\r':
+				return true;
+			default:
+				++index;
+				break;
+		}
+	}
+	return true;
 }
 
 bool chcl::JSON_Parser::JumpWhitespace(const std::string &text, size_t &index)
@@ -169,55 +131,95 @@ bool chcl::JSON_Parser::JumpArray(const std::string &text, size_t &index)
 	return false;
 }
 
-bool chcl::JSON_Parser::JumpString(const std::string &text, size_t &index)
+namespace chcl
 {
-	if (text[index] != '\"') return false;
+chcl::JSON_Stream& operator>>(JSON_Stream &stream, std::string &str)
+{
+	str.clear();
 
-	++index;
+	bool escapedChar = false;
+	std::string elemStr = stream.str();
 
-	while (index < text.length())
+	if (elemStr[0] != '\"') return stream;
+
+	for (size_t i = 1; i < elemStr.length() - 1; ++i)
 	{
-		switch (text[index++])
+		char currentChar = elemStr[i];
+
+		if (escapedChar)
+		{
+			switch (currentChar)
+			{
+				case '\"':
+					str.push_back('\"');
+					break;
+				case '\\':
+					str.push_back('\\');
+					break;
+				case 'n':
+					str.push_back('\n');
+					break;
+				case 'r':
+					str.push_back('\r');
+					break;
+				case 't':
+					str.push_back('\t');
+					break;
+				default:
+					str.push_back(currentChar);
+			}
+
+			escapedChar = false;
+			continue;
+		}
+
+		if (currentChar == '\\')
+		{
+			escapedChar = true;
+			continue;
+		}
+
+		str.push_back(currentChar);
+	}
+	return stream;
+}
+
+chcl::JSON_Stream& operator>>(JSON_Stream &stream, bool &val)
+{
+	val = (stream.str() == "true");
+	return stream;
+}
+
+chcl::JSON_Stream& operator<<(JSON_Stream &stream, const std::string &str)
+{
+	stream << '\"';
+	for (char c : str)
+	{
+		switch (c)
 		{
 			case '\\':
-				++index;
-				break;
 			case '\"':
-				return true;
-		}
-	}
-	return false;
-}
-
-bool chcl::JSON_Parser::JumpElement(const std::string &text, size_t &index)
-{
-	while (index < text.length())
-	{
-		switch (text[index])
-		{
-			case '{':
-				return JumpSection(text, index);
-			case '[':
-				return JumpArray(text, index);
-			case '\"':
-				return JumpString(text, index);
-			case ',':
-			case '}':
-			case ']':
-			case ' ':
-			case '\t':
 			case '\n':
 			case '\r':
-				return true;
-			default:
-				++index;
-				break;
+			case '\t':
+				stream << '\\';
 		}
+		stream << c;
 	}
-	return true;
+	stream << '\"';
+	return stream;
 }
 
-chcl::JSON_Stream& chcl::operator>>(JSON_Stream &stream, JSON_Object &obj)
+chcl::JSON_Stream& operator<<(JSON_Stream &stream, bool val)
+{
+	if (val)
+		stream << "true";
+	else
+		stream << "false";
+	return stream;
+}
+
+chcl::JSON_Stream& operator>>(JSON_Stream &stream, JSON_Object &obj)
 {
 	obj.clear();
 
@@ -256,7 +258,7 @@ chcl::JSON_Stream& chcl::operator>>(JSON_Stream &stream, JSON_Object &obj)
 	return stream;
 }
 
-chcl::JSON_Stream& chcl::operator<<(JSON_Stream &stream, const JSON_Object &obj)
+chcl::JSON_Stream& operator<<(JSON_Stream &stream, const JSON_Object &obj)
 {
 	stream.elemStream << "{\n";
 	bool firstLine = true;
@@ -283,3 +285,5 @@ chcl::JSON_Stream& chcl::operator<<(JSON_Stream &stream, const JSON_Object &obj)
 	stream.elemStream << "\n}";
 	return stream;
 }
+
+} // namespace chcl

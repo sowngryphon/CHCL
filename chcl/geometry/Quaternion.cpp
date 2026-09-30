@@ -75,35 +75,37 @@ chcl::Quaternion& chcl::Quaternion::operator*=(float scale)
 	return *this;
 }
 
-chcl::Quaternion chcl::operator+(const Quaternion &lhs, const Quaternion &rhs)
+namespace chcl
+{
+chcl::Quaternion operator+(const Quaternion &lhs, const Quaternion &rhs)
 {
 	Quaternion res{ lhs };
 	res += rhs;
 	return res;
 }
 
-chcl::Quaternion chcl::operator-(const Quaternion &lhs, const Quaternion &rhs)
+chcl::Quaternion operator-(const Quaternion &lhs, const Quaternion &rhs)
 {
 	Quaternion res{ lhs };
 	res -= rhs;
 	return res;
 }
 
-chcl::Quaternion chcl::operator*(const Quaternion &lhs, const Quaternion &rhs)
+chcl::Quaternion operator*(const Quaternion &lhs, const Quaternion &rhs)
 {
 	Quaternion res{ lhs };
 	res *= rhs;
 	return res;
 }
 
-chcl::Quaternion chcl::operator*(const Quaternion &lhs, float scale)
+chcl::Quaternion operator*(const Quaternion &lhs, float scale)
 {
 	Quaternion res{ lhs };
 	res *= scale;
 	return res;
 }
 
-chcl::Quaternion chcl::operator*(float scale, const Quaternion &rhs)
+chcl::Quaternion operator*(float scale, const Quaternion &rhs)
 {
 	Quaternion res{ rhs };
 	res *= scale;
@@ -114,3 +116,5 @@ chcl::Quaternion::operator chcl::Vector3<float>() const
 {
 	return Vector3<float>(i, j, k);
 }
+
+} // namespace chcl
